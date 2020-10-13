@@ -16,11 +16,10 @@ export class AuthorizeComponent implements OnInit {
 
   async use() {
     let code = await this.auth.open({
-      zIndex: '8888',
-      modes: ['phone', 'password', 'face', 'card', 'wx-qr', 'ali-qr']
+      user: 'mock user',
     });
     console.log('授权结果：' + code);
-    alert('授权结果：' + code);
+    // alert('授权结果：' + code);
     if (!code) {
       return;
     }

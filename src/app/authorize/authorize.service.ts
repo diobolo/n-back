@@ -1,65 +1,43 @@
 import { Injectable } from '@angular/core';
-import { main } from '@angular/compiler-cli/src/main';
+
+import authentication from './template/authentication';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthorizeService {
+  mode = 'authentication';
+  modes = [
+    { name: 'authentication', label: '验证码', template: authentication }
+  ];
+
   constructor() {
   }
 
-  open({zIndex = '9999', modes = ['phone', 'face', 'password', 'card']}) {
-
+  open({}) {
     return new Promise(resolve => {
-      let container =  document.createElement('div');
+      let container = document.createElement('div');
       container.style.position = 'fixed';
       container.style.left = '0';
       container.style.top = '0';
       container.style.right = '0';
       container.style.bottom = '0';
-      container.style.zIndex = zIndex;
+      container.style.zIndex = '9999';
       container.style.background = 'rgba(0,0,0,0.2)';
+      let tabsHTML = '';
+      let mainsHTML = '';
+
+      for (let mode of this.modes) {
+        tabsHTML += `<div class="tab">${mode.label}</div>`;
+        mainsHTML += mode.template;
+      }
 
       container.innerHTML = `
         <div class="modal">
           <div class="body">
-            <div class="tabs">
-              <div class="tab">手机号</div>
-              <div class="tab">人脸识别</div>
-              <div class="tab">账号密码</div>
-              <div class="tab">身份证</div>
-              <div class="tab">微信扫码</div>
-              <div class="tab">支付宝扫码</div>
-            </div>
-            <div class="main phone" style="display: block;">
-              <div>
-                <span>手机号：</span>
-                <input type="number" placeholder="输入手机号" />
-                <button class="send-code">send code</button>
-              </div>
-              <div>
-                <span>验证码：</span>
-                <input type="number" placeholder="输入验证码" />
-              </div>
-            </div>
-            <div class="main face">
-              <div>人脸识别模拟</div>
-            </div>
-            <div class="main password">
-              <div>账号密码模拟</div>
-            </div>
-            <div class="main card">
-              <div>身份证识别模拟</div>
-            </div>
-            <div class="main wx">
-              <div>微信扫码模拟</div>
-            </div>
-            <div class="main ali">
-              <div>支付宝扫码模拟</div>
-            </div>
+            ${mainsHTML}
           </div>
           <div class="buttons">
-            <button class="submit">submit</button>
             <button class="cancel">cancel</button>
           </div>
         </div>
@@ -95,7 +73,6 @@ export class AuthorizeService {
             background-color: #eee;
           }
           .modal .main {
-            display: none;
             height: 100%;
           }
           .modal .buttons {
@@ -125,7 +102,7 @@ export class AuthorizeService {
         });
       });
       document.body.appendChild(container);
-    })
+    });
   }
 
 }
