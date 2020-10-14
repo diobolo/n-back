@@ -7,8 +7,8 @@ import { AuthorizeService } from '../authorize.service';
   styleUrls: ['./authorize.component.scss']
 })
 export class AuthorizeComponent implements OnInit {
-
-  constructor(private auth: AuthorizeService) {
+  auth = new AuthorizeService();
+  constructor() {
   }
 
   ngOnInit(): void {

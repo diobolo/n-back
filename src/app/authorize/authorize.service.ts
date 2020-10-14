@@ -1,10 +1,6 @@
-import { Injectable } from '@angular/core';
 
 import authentication from './template/authentication';
 
-@Injectable({
-  providedIn: 'root'
-})
 export class AuthorizeService {
   mode = 'authentication';
   modes = [
@@ -85,17 +81,17 @@ export class AuthorizeService {
       setTimeout(() => {
         let tabs = container.querySelectorAll('.tab');
         let mains = container.querySelectorAll('.main');
-        let submitBtn = container.querySelector('.submit');
+        // let submitBtn = container.querySelector('.submit');
         let cancelBtn = container.querySelector('.cancel');
         tabs.forEach((t, ti) => t.addEventListener('click', e => {
           mains.forEach((m, mi) => {
             (m as any).style.display = ti === mi ? 'block' : 'none';
           });
         }));
-        submitBtn.addEventListener('click', () => {
-          document.body.removeChild(container);
-          resolve('a mock code');
-        });
+        // submitBtn.addEventListener('click', () => {
+        //   document.body.removeChild(container);
+        //   resolve('a mock code');
+        // });
         cancelBtn.addEventListener('click', () => {
           document.body.removeChild(container);
           resolve('');
